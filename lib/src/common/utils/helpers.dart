@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:cloud_text_to_speech/cloud_text_to_speech.dart';
+import 'package:cloud_text_to_speech/src/universal/voices/voice_model.dart';
 import 'package:xml/xml.dart';
 
 import 'log.dart';

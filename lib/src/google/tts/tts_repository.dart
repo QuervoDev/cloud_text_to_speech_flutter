@@ -26,7 +26,7 @@ class RepositoryGoogle {
   /// [VoicesFailedTooManyRequestsGoogle], [VoicesFailedBadGateWayGoogle], [VoicesFailedUnknownErrorGoogle]
   Future<VoicesSuccessGoogle> getVoices() async {
     return await voicesHandler.getVoices(
-        ApiKeyAuthenticationHeaderGoogle(apiKey: ConfigGoogle.apiKey));
+        ApiKeyAuthenticationHeaderGoogle(apiKey: ConfigGoogle.apiKey), ConfigGoogle.appId != null ? AppIdentifierAuthenticationHeaderGoogle(appIdentifier: ConfigGoogle.appId!) : null);
   }
 
   ///Converts text to speech and return audio file as [Uint8List].

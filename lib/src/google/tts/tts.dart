@@ -24,7 +24,7 @@ class TtsGoogle {
   /// **withLogs** : (optional) enable logs. *true* by default
   ///
   static void init({required InitParamsGoogle params, bool withLogs = true}) =>
-      _init(params.apiKey, withLogs);
+      _init(params.apiKey, params.appId, withLogs);
 
   ///Get voices
   ///
@@ -57,9 +57,9 @@ class TtsGoogle {
     return repo.convertTts(ttsParams);
   }
 
-  static void _init(String apiKey, [bool withLogs = true]) {
+  static void _init(String apiKey, String? appId, [bool withLogs = true]) {
     if (!_initDone) {
-      ConfigGoogle.init(apiKey: apiKey);
+      ConfigGoogle.init(apiKey: apiKey, appId: appId);
       _initRepository();
       _initLogs(withLogs);
       _initDone = true;
