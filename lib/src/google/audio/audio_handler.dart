@@ -10,8 +10,7 @@ import 'package:cloud_text_to_speech/src/google/ssml/ssml.dart';
 import 'package:http/http.dart' as http;
 
 class AudioHandlerGoogle {
-  Future<AudioSuccessGoogle> getAudio(AudioRequestParamsGoogle params,
-      AuthenticationHeaderGoogle authHeader) async {
+  Future<AudioSuccessGoogle> getAudio(AudioRequestParamsGoogle params, AuthenticationHeaderGoogle authHeader) async {
     final client = http.Client();
     final audioClient = AudioClientGoogle(
       client: client,
@@ -20,22 +19,20 @@ class AudioHandlerGoogle {
     final mapper = AudioResponseMapperGoogle();
 
     try {
-      final ssml =
-          SsmlGoogle(text: params.text, rate: params.rate, pitch: params.pitch);
+      final ssml = SsmlGoogle(text: params.text, rate: params.rate, pitch: params.pitch);
 
       final Map<String, dynamic> body = {
         'input': {'ssml': ssml.sanitizedSsml},
-        'voice': {
-          'name': params.voice.code,
-          'languageCode': params.voice.locale.code
+        'voice': {'name': params.voice.code, 'languageCode': params.voice.locale.code},
+        'audioConfig': {
+          'audioEncoding': params.audioFormat,
+          'enableTimePointing': ['WORD'],
         },
-        'audioConfig': {'audioEncoding': params.audioFormat},
       };
 
       final String bodyJson = jsonEncode(body);
 
-      final response = await audioClient.post(Uri.parse(EndpointsGoogle.tts),
-          body: bodyJson);
+      final response = await audioClient.post(Uri.parse(EndpointsGoogle.tts), body: bodyJson);
       final audioResponse = mapper.map(response);
       if (audioResponse is AudioSuccessGoogle) {
         return audioResponse;
